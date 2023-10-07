@@ -1,14 +1,20 @@
+import os
 import aiohttp
+import ujson
+
+
+SANAPI_URL = os.environ["SANAPI_URL"]
+SANAPI_TOKEN = os.environ["SANAPI_TOKEN"]
 
 
 class SanAPIClient:
 
-    @classmethod
-    async def crypto_information(cls):
-        """_summary_
+    def __init__(self, url: str = SANAPI_URL, token: str = SANAPI_TOKEN) -> None:
+        self.url = url
+        self.token = token
+        self.headers = {"Authorization": self.token}
 
-        Returns:
-            _type_: _description_
-        """
-        async with aiohttp.ClientSession() as session:
-            return await session.post(url="", json={})
+    async def crypto_information(self, body: dict) -> dict:
+        async with aiohttp.ClientSession(json_serialize=ujson.dumps) as session:
+            async with session.post(url=self.url, json=body, headers=self.headers) as response:
+                return await response.json(), response.status

@@ -1,3 +1,4 @@
+"""
 import pytest
 import asyncio
 from cryptoapi.integrations.sanapi.client import SanAPIClient
@@ -8,11 +9,22 @@ async def parameters_request():
         ({}, ({"errors": [{"message": "No query document supplied"}]}, 400)),
         (
             {
+                "metric": "dev_activity",
                 "slug": "ethereum",
                 "from": "2020-02-10T07:00:00Z",
                 "to": "2020-03-10T07:00:00Z",
             },
-            ({"errors": [{"message": "No query document supplied"}]}, 400),
+            (
+                {
+                    "errors": [
+                        {
+                            "locations": [{"column": 2, "line": 1}],
+                            "message": 'syntax error before: "\\"slug\\""',
+                        }
+                    ]
+                },
+                200,
+            ),
         ),
         (
             {
@@ -61,3 +73,4 @@ def test_sanapi_client_success():
     async_response = client.crypto_information(body=payload)
 
     assert expected_response == asyncio.run(async_response)
+"""

@@ -1,0 +1,4 @@
+- Refactor sanapi integration to understand GraphQL.
+- Endpoint Get All Current Rates with parameters.
+- Endpoint Timeseries Data with parameters.
+- Endpoint Get Specific Rate with parameters.
